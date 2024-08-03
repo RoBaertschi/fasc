@@ -1,0 +1,3 @@
+add_executable(lexer_tests lexer_tests.cpp)
+target_link_libraries(lexer_tests PRIVATE Catch2::Catch2WithMain lexer)
+catch_discover_tests(lexer_tests)

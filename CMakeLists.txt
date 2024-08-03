@@ -1,11 +1,18 @@
 cmake_minimum_required(VERSION 3.28)
 project(fasc)
 
+# Dependencies
+add_subdirectory(deps)
+
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(fasc main.cpp
-        lexer/Lexer.cpp
-        lexer/Lexer.hpp
-        lexer/Token.hpp
-        lexer/Globals.cpp
-        lexer/Token.cpp)
+# Libs
+add_subdirectory(lexer)
+
+add_executable(fasc main.cpp)
+target_link_libraries(fasc PRIVATE lexer)
+
+# Tests
+include(CTest)
+include(Catch)
+add_subdirectory(lexer/tests)
