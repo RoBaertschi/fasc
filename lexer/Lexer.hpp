@@ -17,7 +17,7 @@ class Lexer {
     std::uint32_t   readPosition    = 0;
     unsigned char   ch              = 0;
     void readChar();
-    unsigned char peekChar();
+    unsigned char peekChar() const;
     void skipWhitespace();
     std::string readIdentifier();
     std::string readNumber();

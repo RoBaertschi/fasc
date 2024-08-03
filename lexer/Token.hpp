@@ -12,21 +12,29 @@ enum class TokenType {
     Illegal,
     Eof,
 
+    // Operators
+    Arrow,      // ->
+    LParent,    // (
+    RParent,    // )
+    Colon,      // :
 
     // keywords
     Fn,
-    Extern, // Extern, but is sadly reserved
+    Extern,     // Extern, but is sadly reserved
 
     // identifiers and literals
     Identifier,
     Number,
 };
 
+std::string token_type_to_string(TokenType token);
+
 struct Token {
     std::string literal;
     TokenType   type;
+    std::string to_string() const;
 
-    static TokenType LookupIdent(std::string ident);
+    static TokenType LookupIdent(const std::string &ident);
 };
 
 #endif //FASC_TOKEN_HPP

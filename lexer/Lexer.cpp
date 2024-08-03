@@ -5,7 +5,9 @@
 #include "Lexer.hpp"
 #include <optional>
 
-Lexer::Lexer(std::string input) : input(std::move(input)) {}
+Lexer::Lexer(std::string input) : input(std::move(input)) {
+    readChar();
+}
 
 void Lexer::readChar() {
     if (readPosition >= input.length()) {
@@ -18,21 +20,31 @@ void Lexer::readChar() {
     readPosition++;
 }
 
-static bool isLetter(unsigned char ch) {
+static bool isLetter(const unsigned char ch) {
     return ('a' <= ch && ch <= 'z') || ('A' <= ch && ch <= 'Z') || ch == '_';
 }
 
-static bool isDigit(unsigned char ch) {
+static bool isDigit(const unsigned char ch) {
     return '0' <= ch && ch <= '9';
 }
+
+#define SIMPLE_TOKEN(ch, ty) case ch: {\
+    tok.type = ty;\
+    tok.literal = std::string{ch};\
+    break;\
+    }
 
 Token Lexer::nextToken() {
     Token tok{};
 
     skipWhitespace();
     switch (ch) {
+        SIMPLE_TOKEN('(', TokenType::LParent)
+        SIMPLE_TOKEN(')', TokenType::RParent)
+        SIMPLE_TOKEN(':', TokenType::Colon)
+
         // Comment
-        case '/':
+        case '/': {
             if (peekChar() == '/') {
                 readChar();
                 unsigned char pc = 0;
@@ -40,13 +52,28 @@ Token Lexer::nextToken() {
                     readChar();
                 }
             }
+            // TODO: Maybe add a Comment token instead of reading the next token
             return nextToken();
+        }
+
+        case '-': {
+            if (peekChar() == '>') {
+                readChar();
+                tok.literal = "->";
+                tok.type = TokenType::Arrow;
+            } else {
+                tok.literal = std::string{static_cast<char>(ch)};
+                tok.type = TokenType::Illegal;
+            }
+            break;
+        }
         // EOF
-        case 0:
+        case 0: {
             tok.literal = "";
             tok.type = TokenType::Eof;
             break;
-        default:
+        }
+        default: {
             if (isLetter(ch)) {
                 tok.literal = readIdentifier();
                 tok.type = Token::LookupIdent(tok.literal);
@@ -56,9 +83,10 @@ Token Lexer::nextToken() {
                 tok.literal = readNumber();
             } else {
                 tok.type = TokenType::Illegal;
-                char character[2] = {(char)ch, '\0'};
+                char character[2] = {static_cast<char>(ch), '\0'};
                 tok.literal = std::string(character);
             }
+        }
     }
 
     readChar();
@@ -71,16 +99,15 @@ void Lexer::skipWhitespace() {
     }
 }
 
-unsigned char Lexer::peekChar() {
+unsigned char Lexer::peekChar() const {
     if (readPosition >= input.length()) {
         return 0;
-    } else {
-        return input[readPosition];
     }
+    return input[readPosition];
 }
 
 std::string Lexer::readIdentifier() {
-    auto pos = position;
+    const auto pos = position;
     while (isLetter(ch)) {
         readChar();
     }
@@ -89,7 +116,7 @@ std::string Lexer::readIdentifier() {
 }
 
 std::string Lexer::readNumber() {
-    auto pos = position;
+    const auto pos = position;
     while(isDigit(ch)) {
         readChar();
     }

@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.28)
 project(fasc)
 
+add_compile_options(-Wall -Wextra -pedantic -Werror)
+
 # Dependencies
 add_subdirectory(deps)
 
