@@ -1,0 +1,1 @@
+// Contains globals, that then can be referenced in other hpp files.
