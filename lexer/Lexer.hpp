@@ -20,7 +20,8 @@ class Lexer {
     unsigned char peekChar() const;
     void skipWhitespace();
     std::string readIdentifier();
-    std::string readNumber();
+
+    Token readNumber();
 
 public:
     explicit Lexer(std::string input);

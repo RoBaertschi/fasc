@@ -3,7 +3,9 @@
 //
 
 #include "Lexer.hpp"
-#include <optional>
+
+#include <iostream>
+#include <stdexcept>
 
 Lexer::Lexer(std::string input) : input(std::move(input)) {
     readChar();
@@ -25,7 +27,7 @@ static bool isLetter(const unsigned char ch) {
 }
 
 static bool isDigit(const unsigned char ch) {
-    return '0' <= ch && ch <= '9';
+    return ('0' <= ch && ch <= '9');
 }
 
 #define SIMPLE_TOKEN(ch, ty) case ch: {\
@@ -44,6 +46,16 @@ Token Lexer::nextToken() {
         SIMPLE_TOKEN('{', TokenType::LBraket)
         SIMPLE_TOKEN('}', TokenType::RBraket)
         SIMPLE_TOKEN(':', TokenType::Colon)
+
+        case '.': {
+            if (!isDigit(peekChar())) {
+                tok.literal = ".";
+                tok.type = TokenType::Dot;
+            } else {
+                tok = readNumber();
+            }
+            break;
+        }
 
         // Comment
         case '/': {
@@ -81,8 +93,8 @@ Token Lexer::nextToken() {
                 tok.type = Token::LookupIdent(tok.literal);
                 return tok;
             } else if (isDigit(ch)) {
-                tok.type = TokenType::Number;
-                tok.literal = readNumber();
+                tok = readNumber();
+                return tok;
             } else {
                 tok.type = TokenType::Illegal;
                 char character[2] = {static_cast<char>(ch), '\0'};
@@ -117,11 +129,26 @@ std::string Lexer::readIdentifier() {
     return input.substr(pos, position - pos);
 }
 
-std::string Lexer::readNumber() {
+Token Lexer::readNumber() {
     const auto pos = position;
-    while(isDigit(ch)) {
+    bool foundDot = false;
+
+    while(isDigit(ch) || ch == '.') {
+        // std::cout << "ch: " << ch << "\n";
+        if (ch == '.') {
+            foundDot = true;
+            if (peekChar() == '.') {
+                readChar();
+                // std::cout << "ch: " << ch << " peekChar: " << peekChar() << "\n" << input << " | " << pos << ":" << position << " | " << input.substr(pos, position - pos);
+                break;
+            }
+        }
         readChar();
     }
 
-    return input.substr(pos, position - pos);
-}
+    return Token{
+        input.substr(pos, position - pos),
+        foundDot ? TokenType::Float : TokenType::Integer
+    };
+};
+

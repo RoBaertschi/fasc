@@ -55,7 +55,7 @@ TEST_CASE("Test valid tokens", "[lexer]") {
         {
             "5",
             {
-                {"5", TokenType::Number},
+                {"5", TokenType::Integer},
                 _EOF
             },
         },
@@ -63,7 +63,7 @@ TEST_CASE("Test valid tokens", "[lexer]") {
             "hello 5",
             {
                 {"hello", TokenType::Identifier},
-                {"5", TokenType::Number},
+                {"5", TokenType::Integer},
                 _EOF
             }
         },
@@ -82,8 +82,21 @@ TEST_CASE("Test valid tokens", "[lexer]") {
                 {"{", TokenType::LBraket},
                 {"}", TokenType::RBraket},
                 _EOF
-            }
+            },
         },
+            {
+            "1.2 1. .3 43.. 43..4",
+                {
+                    {"1.2", TokenType::Float},
+                    {"1.", TokenType::Float},
+                    {".3", TokenType::Float},
+                    {"43.", TokenType::Float},
+                    {".", TokenType::Dot},
+                    {"43.", TokenType::Float},
+                    {".4", TokenType::Float},
+                    _EOF
+                }
+            },
     };
     for (auto [input, expectedTokens]: testCases) {
         auto lexer = Lexer(input);
@@ -92,7 +105,7 @@ TEST_CASE("Test valid tokens", "[lexer]") {
         Token token;
         do {
             token = lexer.nextToken();
-            INFO(token.to_string());
+            INFO(token.to_string() + expectedTokens[i].to_string());
             REQUIRE(token.type == expectedTokens[i].type);
             REQUIRE(token.literal == expectedTokens[i].literal);
         } while (i++, token.type != TokenType::Eof);

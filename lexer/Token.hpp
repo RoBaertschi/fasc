@@ -19,6 +19,7 @@ enum class TokenType {
     LBraket,    // {
     RBraket,    // }
     Colon,      // :
+    Dot,        // .
 
     // keywords
     Fn,
@@ -26,7 +27,8 @@ enum class TokenType {
 
     // identifiers and literals
     Identifier,
-    Number,
+    Integer,
+    Float,
 };
 
 std::string token_type_to_string(TokenType token);

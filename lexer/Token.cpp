@@ -24,8 +24,10 @@ std::string token_type_to_string(TokenType token) {
             return "Extern";
         case TokenType::Identifier:
             return "Identifier";
-        case TokenType::Number:
+        case TokenType::Integer:
             return "Number";
+        case TokenType::Float:
+            return "Float";
         case TokenType::Arrow:
             return "Arrow";
         case TokenType::LParent:
@@ -38,6 +40,8 @@ std::string token_type_to_string(TokenType token) {
             return "LBraket";
         case TokenType::RBraket:
             return "RBraket";
+        case TokenType::Dot:
+            return "Dot";
     }
     throw std::runtime_error("Invalid token supplied, please check your program");
 }
