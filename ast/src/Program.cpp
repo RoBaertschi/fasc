@@ -10,7 +10,7 @@ namespace fas::ast {
     std::string Program::to_string() {
         std::stringstream stream{};
 
-        for (const auto statement: statements) {
+        for (auto&& statement: statements) {
             stream << statement->to_string();
         }
 

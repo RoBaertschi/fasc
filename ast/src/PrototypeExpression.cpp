@@ -5,14 +5,17 @@
 #include "fas/ast/PrototypeExpression.hpp"
 
 #include <sstream>
+#include <utility>
 
 
 namespace fas::ast {
-    PrototypeExpression::PrototypeExpression(const Token &token,
-        std::vector<std::pair<std::unique_ptr<Identifier>, std::unique_ptr<Identifier>>> parameters,
-        std::optional<std::unique_ptr<Identifier>> return_type): token(token),
-                                                                        parameters(std::move(parameters)),
-                                                                        return_type(std::move(return_type)) {
+    PrototypeExpression::PrototypeExpression(Token token,
+                                             std::vector<std::pair<std::unique_ptr<Identifier>, std::unique_ptr<
+                                                 Identifier> > > parameters,
+                                             std::optional<std::unique_ptr<Identifier> > return_type): token(std::move(
+            token)),
+        parameters(std::move(parameters)),
+        return_type(std::move(return_type)) {
     }
 
     std::string PrototypeExpression::to_string() {

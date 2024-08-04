@@ -10,7 +10,7 @@
 
 
 namespace fas::ast {
-    BlockStatement::BlockStatement(Token token): token(std::move(token)), statements({}) {
+    BlockStatement::BlockStatement(Token token): token(std::move(token)) {
     }
 
     BlockStatement::BlockStatement(Token token, std::vector<std::unique_ptr<Statement>> statements) : token(std::move(token)), statements(std::move(statements)) {
@@ -19,7 +19,7 @@ namespace fas::ast {
     std::string BlockStatement::to_string() {
         std::stringstream out;
 
-        for (auto statement: statements) {
+        for (auto&& statement : statements) {
             out << statement->to_string();
         }
 

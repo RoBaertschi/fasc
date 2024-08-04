@@ -23,7 +23,7 @@ public:
     std::string token_literal() override;
 
     Token token;
-    std::vector<std::unique_ptr<Statement>> statements;
+    std::vector<std::unique_ptr<Statement>> statements{};
 };
 
 }

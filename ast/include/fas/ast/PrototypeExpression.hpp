@@ -18,7 +18,7 @@ namespace fas::ast {
 
 class PrototypeExpression final : public Expression {
 public:
-    PrototypeExpression(const Token &token,
+    PrototypeExpression(Token token,
         std::vector<std::pair<std::unique_ptr<Identifier>, std::unique_ptr<Identifier>>> parameters,
         std::optional<std::unique_ptr<Identifier>> return_type);
 
