@@ -41,6 +41,8 @@ Token Lexer::nextToken() {
     switch (ch) {
         SIMPLE_TOKEN('(', TokenType::LParent)
         SIMPLE_TOKEN(')', TokenType::RParent)
+        SIMPLE_TOKEN('{', TokenType::LBraket)
+        SIMPLE_TOKEN('}', TokenType::RBraket)
         SIMPLE_TOKEN(':', TokenType::Colon)
 
         // Comment

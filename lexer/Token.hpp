@@ -16,6 +16,8 @@ enum class TokenType {
     Arrow,      // ->
     LParent,    // (
     RParent,    // )
+    LBraket,    // {
+    RBraket,    // }
     Colon,      // :
 
     // keywords

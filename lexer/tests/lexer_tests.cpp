@@ -16,47 +16,47 @@ struct TestCase {
     std::vector<Token> expectedTokens;
 };
 
-#define EEOF {"", TokenType::Eof}
+#define _EOF {"", TokenType::Eof}
 TEST_CASE("Test valid tokens", "[lexer]") {
     // ReSharper disable once CppTooWideScopeInitStatement
     std::vector<TestCase> testCases{
         {
             "",
-            {EEOF}
+            {_EOF}
         },
         {
             "^",
             {
                 {"^", TokenType::Illegal},
-                EEOF
+                _EOF
             },
         },
         {
             "fn",
             {
                 {"fn", TokenType::Fn},
-                EEOF
+                _EOF
             },
         },
         {
             "extern",
             {
                 {"extern", TokenType::Extern},
-                EEOF
+                _EOF
             },
         },
         {
             "hello",
             {
                 {"hello", TokenType::Identifier},
-                EEOF
+                _EOF
             },
         },
         {
             "5",
             {
                 {"5", TokenType::Number},
-                EEOF
+                _EOF
             },
         },
         {
@@ -64,15 +64,24 @@ TEST_CASE("Test valid tokens", "[lexer]") {
             {
                 {"hello", TokenType::Identifier},
                 {"5", TokenType::Number},
-                EEOF
+                _EOF
             }
         },
         {
-            "fn hello",
+            "fn hello(test: int) -> int {}",
             {
+                {"fn", TokenType::Fn},
                 {"hello", TokenType::Identifier},
-                {"5", TokenType::Number},
-                EEOF
+                {"(", TokenType::LParent},
+                {"test", TokenType::Identifier},
+                {":", TokenType::Colon},
+                {"int", TokenType::Identifier},
+                {")", TokenType::RParent},
+                {"->", TokenType::Arrow},
+                {"int", TokenType::Identifier},
+                {"{", TokenType::LBraket},
+                {"}", TokenType::RBraket},
+                _EOF
             }
         },
     };

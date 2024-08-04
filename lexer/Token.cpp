@@ -26,15 +26,27 @@ std::string token_type_to_string(TokenType token) {
             return "Identifier";
         case TokenType::Number:
             return "Number";
-        default:
-            throw std::runtime_error("Invalid token supplied, please check your program");
+        case TokenType::Arrow:
+            return "Arrow";
+        case TokenType::LParent:
+            return "LParent";
+        case TokenType::RParent:
+            return "RParent";
+        case TokenType::Colon:
+            return "Colon";
+        case TokenType::LBraket:
+            return "LBraket";
+        case TokenType::RBraket:
+            return "RBraket";
     }
+    throw std::runtime_error("Invalid token supplied, please check your program");
 }
 
 std::string Token::to_string() const {
     std::stringstream stream{};
-    stream << "Literal: " << literal << "\n";
-    stream << "Type: " << token_type_to_string(type) << std::endl;
+    stream << "Token{ ";
+    stream << "Literal: \"" << literal << "\" ";
+    stream << "Type: " << token_type_to_string(type) << " }" << std::endl;
     return stream.str();
 }
 
