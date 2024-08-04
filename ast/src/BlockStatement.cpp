@@ -13,14 +13,14 @@ namespace fas::ast {
     BlockStatement::BlockStatement(Token token): token(std::move(token)), statements({}) {
     }
 
-    BlockStatement::BlockStatement(Token token, const std::vector<Statement> &statements) : token(std::move(token)), statements(statements) {
+    BlockStatement::BlockStatement(Token token, std::vector<std::unique_ptr<Statement>> statements) : token(std::move(token)), statements(std::move(statements)) {
     }
 
     std::string BlockStatement::to_string() {
         std::stringstream out;
 
         for (auto statement: statements) {
-            out << statement.to_string();
+            out << statement->to_string();
         }
 
         return out.str();

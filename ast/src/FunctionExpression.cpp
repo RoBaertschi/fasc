@@ -8,39 +8,20 @@
 
 
 namespace fas::ast {
-    FunctionExpression::FunctionExpression(Token token,
-                                           const std::vector<std::pair<Identifier, Identifier> > &parameters,
-                                           BlockStatement body,
-                                           std::optional<Identifier> return_type =
-                                                   std::nullopt): token(std::move(token)),
-                                                                  parameters(parameters),
-                                                                  body(std::move(body)),
-                                                                  return_type_(std::move(return_type)) {
+    FunctionExpression::FunctionExpression(std::unique_ptr<PrototypeExpression> proto,
+        std::unique_ptr<BlockStatement> body) : proto(std::move(proto)), body(std::move(body)) {
     }
 
     std::string FunctionExpression::to_string() {
         std::stringstream out{};
 
-        std::string params{};
-
-        for (const auto &[first, second]: parameters) {
-            params.append(first.value).append(": ").append(second.value).append(", ");
-        }
-
-        out << "fn ";
-        out << token_literal();
-        out << "(";
-        out << params;
-        out << ") ";
-        if (return_type.has_value()) {
-            out << "-> " << return_type.value().value << " ";
-        }
-        out << body.to_string();
+        out << proto->to_string() << " ";
+        out << body->to_string();
 
         return out.str();
     }
 
     std::string FunctionExpression::token_literal() {
-        return token.literal;
+        return proto->token_literal();
     }
 }

@@ -16,6 +16,8 @@ add_library(ast STATIC
         include/fas/ast/ExpressionStatement.hpp
         src/BlockStatement.cpp
         include/fas/ast/BlockStatement.hpp
+        src/PrototypeExpression.cpp
+        include/fas/ast/PrototypeExpression.hpp
 )
 target_include_directories(ast PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

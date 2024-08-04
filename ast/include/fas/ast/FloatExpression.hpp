@@ -19,7 +19,6 @@ public:
 
     std::string token_literal() override;
 
-
     Token token;
     double value;
 };

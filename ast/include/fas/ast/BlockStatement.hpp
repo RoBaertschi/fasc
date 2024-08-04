@@ -4,6 +4,7 @@
 
 #ifndef BLOCKSTATEMENT_HPP
 #define BLOCKSTATEMENT_HPP
+#include <memory>
 #include <vector>
 
 #include "Statement.hpp"
@@ -14,15 +15,15 @@ namespace fas::ast {
 
 class BlockStatement final : public Statement {
 public:
-    BlockStatement(Token token);
-    BlockStatement(Token token, const std::vector<Statement> &statements);
+    explicit BlockStatement(Token token);
+    BlockStatement(Token token, std::vector<std::unique_ptr<Statement>> statements);
 
     std::string to_string() override;
 
     std::string token_literal() override;
 
     Token token;
-    std::vector<Statement> statements;
+    std::vector<std::unique_ptr<Statement>> statements;
 };
 
 }

@@ -6,8 +6,8 @@
 
 #include "fas/ast/Identifier.hpp"
 
-namespace fas {
-namespace ast {
+
+namespace fas::ast {
     Identifier::Identifier(Token token, std::string value) : token(std::move(token)), value(std::move(value)) {
     }
 
@@ -18,5 +18,4 @@ namespace ast {
     std::string Identifier::token_literal() {
         return token.literal;
     }
-} // ast
-} // fas
+}

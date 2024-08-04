@@ -4,6 +4,7 @@
 
 #ifndef PROGRAM_HPP
 #define PROGRAM_HPP
+#include <memory>
 #include <vector>
 
 #include "Statement.hpp"
@@ -16,7 +17,7 @@ public:
 
     std::string token_literal() override;
 
-    std::vector<Statement> statements;
+    std::vector<std::unique_ptr<Statement>> statements;
 };
 
 } // fas::ast

@@ -10,8 +10,8 @@ namespace fas::ast {
     std::string Program::to_string() {
         std::stringstream stream{};
 
-        for (auto statement: statements) {
-            stream << statement.to_string();
+        for (const auto statement: statements) {
+            stream << statement->to_string();
         }
 
         return stream.str();
@@ -19,7 +19,7 @@ namespace fas::ast {
 
     std::string Program::token_literal() {
         if (!statements.empty()) {
-            return statements[0].token_literal();
+            return statements[0]->token_literal();
         }
         return "";
     }

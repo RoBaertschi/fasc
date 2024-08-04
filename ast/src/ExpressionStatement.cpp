@@ -11,12 +11,14 @@ namespace fas::ast {
     ExpressionStatement::ExpressionStatement(Token token) : token(std::move(token)) {
     }
 
-    ExpressionStatement::ExpressionStatement(Token token, Expression expression) : token(std::move(token)), expression(std::make_optional(expression)) {
+    ExpressionStatement::ExpressionStatement(Token token,
+                                             std::unique_ptr<Expression> expression) : token(std::move(token)),
+        expression(std::make_optional(std::move(expression))) {
     }
 
     std::string ExpressionStatement::to_string() {
         if (expression.has_value()) {
-            return expression->to_string();
+            return expression.value()->to_string();
         }
         return "";
     }

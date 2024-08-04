@@ -4,6 +4,7 @@
 
 #ifndef FUNCTIONEXPRESSION_HPP
 #define FUNCTIONEXPRESSION_HPP
+#include <memory>
 #include <optional>
 #include <utility>
 #include <vector>
@@ -11,6 +12,7 @@
 #include "BlockStatement.hpp"
 #include "Expression.hpp"
 #include "Identifier.hpp"
+#include "PrototypeExpression.hpp"
 #include "Token.hpp"
 
 
@@ -18,17 +20,14 @@ namespace fas::ast {
 
 class FunctionExpression final : public Expression {
 public:
-    FunctionExpression(Token token, const std::vector<std::pair<Identifier, Identifier>> &parameters, BlockStatement body, std::optional<Identifier> return_type);
+    FunctionExpression(std::unique_ptr<PrototypeExpression> proto, std::unique_ptr<BlockStatement> body);
 
     std::string to_string() override;
 
     std::string token_literal() override;
 
-    Token token;
-    std::vector<std::pair<Identifier, Identifier>> parameters;
-    BlockStatement body;
-    std::optional<Identifier> return_type;
-    std::optional<Identifier> return_type_;
+    std::unique_ptr<PrototypeExpression> proto;
+    std::unique_ptr<BlockStatement> body;
 };
 
 }

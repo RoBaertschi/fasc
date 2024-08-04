@@ -7,8 +7,8 @@
 #include "Expression.hpp"
 #include "Token.hpp"
 
-namespace fas {
-namespace ast {
+
+namespace fas::ast {
 
 class Identifier final : public Expression{
 public:
@@ -22,7 +22,6 @@ public:
     std::string value;
 };
 
-} // ast
-} // fas
+}
 
 #endif //IDENTIFIER_HPP
