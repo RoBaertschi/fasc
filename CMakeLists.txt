@@ -10,6 +10,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 # Libs
 add_subdirectory(lexer)
+add_subdirectory(ast)
 add_subdirectory(parser)
 
 add_executable(fasc main.cpp)
