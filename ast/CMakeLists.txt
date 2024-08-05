@@ -18,6 +18,8 @@ add_library(ast STATIC
         include/fas/ast/BlockStatement.hpp
         src/PrototypeExpression.cpp
         include/fas/ast/PrototypeExpression.hpp
+        src/CallExpression.cpp
+        include/fas/ast/CallExpression.hpp
 )
 target_include_directories(ast PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
