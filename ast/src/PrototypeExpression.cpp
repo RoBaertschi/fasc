@@ -4,6 +4,7 @@
 
 #include "fas/ast/PrototypeExpression.hpp"
 
+#include <numeric>
 #include <sstream>
 #include <utility>
 
@@ -21,16 +22,18 @@ namespace fas::ast {
     std::string PrototypeExpression::to_string() {
         std::stringstream out{};
 
-        std::string params{};
+        std::vector<std::string> params{};
 
         for (const auto &[first, second]: parameters) {
-            params.append(first->value).append(": ").append(second->value).append(", ");
+            params.push_back(first->value + ": " + second->value);
         }
 
         out << "fn ";
         out << token_literal();
         out << "(";
-        out << params;
+        out << std::accumulate(std::next(params.begin()), params.end(), params[0], [](std::string a, std::string b) {
+            return a + ", " + b;
+        });
         out << ") ";
         if (return_type.has_value()) {
             out << "-> " << return_type.value()->value;
