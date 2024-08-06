@@ -7,8 +7,13 @@
 #include <catch2/catch_test_macros.hpp>
 
 TEST_CASE("Test Comments", "[lexer]") {
-    auto lexer = Lexer("// Test");
-    REQUIRE(lexer.nextToken().type == TokenType::Eof);
+    auto lexer = Lexer("fn// Test");
+    auto nToken = lexer.nextToken();
+    INFO(nToken.to_string());
+    REQUIRE(nToken.type == TokenType::Fn);
+    nToken = lexer.nextToken();
+    INFO(nToken.to_string());
+    REQUIRE(nToken.type == TokenType::Eof);
 }
 
 struct TestCase {

@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.28)
-project(fasc)
+project(fasc LANGUAGES CXX)
 
-add_compile_options(-Wall -Wextra -pedantic -Werror)
+if (NOT WIN32)
+    add_compile_options(-Wall -Wextra -pedantic -Werror)
+else ()
+    add_compile_definitions(/W4)
+endif ()
 
 # Dependencies
 add_subdirectory(deps)
@@ -18,5 +22,7 @@ target_link_libraries(fasc PRIVATE lexer)
 
 # Tests
 include(CTest)
+enable_testing()
+
 include(Catch)
 add_subdirectory(lexer/tests)

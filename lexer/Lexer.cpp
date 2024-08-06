@@ -61,13 +61,15 @@ Token Lexer::nextToken() {
         case '/': {
             if (peekChar() == '/') {
                 readChar();
-                unsigned char pc = 0;
-                while (pc = peekChar(), pc != '\n' && pc != 0) {
+                while (ch != '\n' && ch != 0) {
                     readChar();
                 }
+                // TODO: Maybe add a Comment token instead of reading the next token
+                return nextToken();
             }
-            // TODO: Maybe add a Comment token instead of reading the next token
-            return nextToken();
+            tok.type = TokenType::Illegal;
+            tok.literal = "/";
+            break;
         }
 
         case '-': {
