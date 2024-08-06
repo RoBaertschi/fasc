@@ -6,10 +6,14 @@
 #define FASC_LEXER_HPP
 
 #include <string>
-#include <utility>
 #include <cstdint>
 
-#include "Token.hpp"
+#include "fas/token/Token.hpp"
+
+namespace fas::lexer
+{
+
+
 
 class Lexer {
     std::string     input;
@@ -21,12 +25,13 @@ class Lexer {
     void skipWhitespace();
     std::string readIdentifier();
 
-    Token readNumber();
+    token::Token readNumber();
 
 public:
     explicit Lexer(std::string input);
-    Token nextToken();
+    token::Token nextToken();
 };
 
+}
 
 #endif //FASC_LEXER_HPP

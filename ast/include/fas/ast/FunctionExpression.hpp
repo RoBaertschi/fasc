@@ -5,15 +5,10 @@
 #ifndef FUNCTIONEXPRESSION_HPP
 #define FUNCTIONEXPRESSION_HPP
 #include <memory>
-#include <optional>
-#include <utility>
-#include <vector>
 
 #include "BlockStatement.hpp"
 #include "Expression.hpp"
-#include "Identifier.hpp"
 #include "PrototypeExpression.hpp"
-#include "Token.hpp"
 
 
 namespace fas::ast {

@@ -10,10 +10,10 @@
 
 
 namespace fas::ast {
-    BlockStatement::BlockStatement(Token token): token(std::move(token)) {
+    BlockStatement::BlockStatement(token::Token token): token(std::move(token)) {
     }
 
-    BlockStatement::BlockStatement(Token token, std::vector<std::unique_ptr<Statement>> statements) : token(std::move(token)), statements(std::move(statements)) {
+    BlockStatement::BlockStatement(token::Token token, std::vector<std::unique_ptr<Statement>> statements) : token(std::move(token)), statements(std::move(statements)) {
     }
 
     std::string BlockStatement::to_string() {

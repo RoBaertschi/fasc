@@ -9,21 +9,21 @@
 
 #include "Expression.hpp"
 #include "Statement.hpp"
-#include "Token.hpp"
+#include "fas/token/Token.hpp"
 
 
 namespace fas::ast {
 
 class ExpressionStatement final : public Statement {
 public:
-    explicit ExpressionStatement(Token token);
-    ExpressionStatement(Token token, std::unique_ptr<Expression> expression);
+    explicit ExpressionStatement(token::Token token);
+    ExpressionStatement(token::Token token, std::unique_ptr<Expression> expression);
 
     std::string to_string() override;
 
     std::string token_literal() override;
 
-    Token token;
+    token::Token token;
     std::optional<std::unique_ptr<Expression>> expression;
 };
 

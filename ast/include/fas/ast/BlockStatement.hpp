@@ -8,21 +8,21 @@
 #include <vector>
 
 #include "Statement.hpp"
-#include "Token.hpp"
+#include "fas/token/Token.hpp"
 
 
 namespace fas::ast {
 
 class BlockStatement final : public Statement {
 public:
-    explicit BlockStatement(Token token);
-    BlockStatement(Token token, std::vector<std::unique_ptr<Statement>> statements);
+    explicit BlockStatement(token::Token token);
+    BlockStatement(token::Token token, std::vector<std::unique_ptr<Statement>> statements);
 
     std::string to_string() override;
 
     std::string token_literal() override;
 
-    Token token;
+    token::Token token;
     std::vector<std::unique_ptr<Statement>> statements{};
 };
 

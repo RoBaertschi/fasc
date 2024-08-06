@@ -5,20 +5,20 @@
 #ifndef IDENTIFIER_HPP
 #define IDENTIFIER_HPP
 #include "Expression.hpp"
-#include "Token.hpp"
+#include "fas/token/Token.hpp"
 
 
 namespace fas::ast {
 
 class Identifier final : public Expression{
 public:
-    Identifier(Token token, std::string value);
+    Identifier(token::Token token, std::string value);
 
     std::string to_string() override;
 
     std::string token_literal() override;
 
-    Token token;
+    token::Token token;
     std::string value;
 };
 

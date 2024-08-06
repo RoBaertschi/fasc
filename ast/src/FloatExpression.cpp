@@ -9,11 +9,11 @@
 #include <charconv>
 
 namespace fas::ast {
-    FloatExpression::FloatExpression(const std::string &string, Token token) : token(std::move(token)), value(0) {
+    FloatExpression::FloatExpression(const std::string &string, token::Token token) : token(std::move(token)), value(0) {
         std::from_chars(string.data(), string.data()+string.size(), value);
     }
 
-    FloatExpression::FloatExpression(const double value, Token token) : token(std::move(token)), value(value) {
+    FloatExpression::FloatExpression(const double value, token::Token token) : token(std::move(token)), value(value) {
     }
 
     std::string FloatExpression::to_string() {

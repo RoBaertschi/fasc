@@ -6,7 +6,8 @@
 #define FASC_TOKEN_HPP
 
 #include <string>
-#include <variant>
+
+namespace fas::token {
 
 enum class TokenType {
     Illegal,
@@ -40,5 +41,6 @@ struct Token {
 
     static TokenType LookupIdent(const std::string &ident);
 };
+}
 
 #endif //FASC_TOKEN_HPP

@@ -2,10 +2,14 @@
 // Created by rtmba on 03.08.2024.
 //
 
-#include "Lexer.hpp"
+#include "fas/lexer/Lexer.hpp"
 
-#include <iostream>
 #include <stdexcept>
+
+namespace fas::lexer
+{
+
+
 
 Lexer::Lexer(std::string input) : input(std::move(input)) {
     readChar();
@@ -36,21 +40,21 @@ static bool isDigit(const unsigned char ch) {
     break;\
     }
 
-Token Lexer::nextToken() {
-    Token tok{};
+token::Token Lexer::nextToken() {
+    token::Token tok{};
 
     skipWhitespace();
     switch (ch) {
-        SIMPLE_TOKEN('(', TokenType::LParent)
-        SIMPLE_TOKEN(')', TokenType::RParent)
-        SIMPLE_TOKEN('{', TokenType::LBraket)
-        SIMPLE_TOKEN('}', TokenType::RBraket)
-        SIMPLE_TOKEN(':', TokenType::Colon)
+        SIMPLE_TOKEN('(', token::TokenType::LParent)
+        SIMPLE_TOKEN(')', token::TokenType::RParent)
+        SIMPLE_TOKEN('{', token::TokenType::LBraket)
+        SIMPLE_TOKEN('}', token::TokenType::RBraket)
+        SIMPLE_TOKEN(':', token::TokenType::Colon)
 
-        case '.': {
+    case '.': {
             if (!isDigit(peekChar())) {
                 tok.literal = ".";
-                tok.type = TokenType::Dot;
+                tok.type = token::TokenType::Dot;
             } else {
                 tok = readNumber();
             }
@@ -67,7 +71,7 @@ Token Lexer::nextToken() {
                 // TODO: Maybe add a Comment token instead of reading the next token
                 return nextToken();
             }
-            tok.type = TokenType::Illegal;
+            tok.type = token::TokenType::Illegal;
             tok.literal = "/";
             break;
         }
@@ -76,29 +80,29 @@ Token Lexer::nextToken() {
             if (peekChar() == '>') {
                 readChar();
                 tok.literal = "->";
-                tok.type = TokenType::Arrow;
+                tok.type = token::TokenType::Arrow;
             } else {
                 tok.literal = std::string{static_cast<char>(ch)};
-                tok.type = TokenType::Illegal;
+                tok.type = token::TokenType::Illegal;
             }
             break;
         }
         // EOF
         case 0: {
             tok.literal = "";
-            tok.type = TokenType::Eof;
+            tok.type = token::TokenType::Eof;
             break;
         }
         default: {
             if (isLetter(ch)) {
                 tok.literal = readIdentifier();
-                tok.type = Token::LookupIdent(tok.literal);
+                tok.type = token::Token::LookupIdent(tok.literal);
                 return tok;
             } else if (isDigit(ch)) {
                 tok = readNumber();
                 return tok;
             } else {
-                tok.type = TokenType::Illegal;
+                tok.type = token::TokenType::Illegal;
                 char character[2] = {static_cast<char>(ch), '\0'};
                 tok.literal = std::string(character);
             }
@@ -131,7 +135,7 @@ std::string Lexer::readIdentifier() {
     return input.substr(pos, position - pos);
 }
 
-Token Lexer::readNumber() {
+token::Token Lexer::readNumber() {
     const auto pos = position;
     bool foundDot = false;
 
@@ -148,9 +152,10 @@ Token Lexer::readNumber() {
         readChar();
     }
 
-    return Token{
+    return token::Token{
         input.substr(pos, position - pos),
-        foundDot ? TokenType::Float : TokenType::Integer
+        foundDot ? token::TokenType::Float : token::TokenType::Integer
     };
 };
 
+}

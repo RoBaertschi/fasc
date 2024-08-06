@@ -5,21 +5,21 @@
 #ifndef FLOATEXPRESSION_HPP
 #define FLOATEXPRESSION_HPP
 #include "Expression.hpp"
-#include "Token.hpp"
+#include "fas/token/Token.hpp"
 
 namespace fas::ast {
 
 class FloatExpression final : public Expression {
 public:
-    FloatExpression(const std::string &string, Token token);
+    FloatExpression(const std::string &string, token::Token token);
 
-    FloatExpression(double value, Token token);
+    FloatExpression(double value, token::Token token);
 
     std::string to_string() override;
 
     std::string token_literal() override;
 
-    Token token;
+    token::Token token;
     double value;
 };
 

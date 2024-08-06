@@ -8,7 +8,7 @@
 
 
 namespace fas::ast {
-    Identifier::Identifier(Token token, std::string value) : token(std::move(token)), value(std::move(value)) {
+    Identifier::Identifier(token::Token token, std::string value) : token(std::move(token)), value(std::move(value)) {
     }
 
     std::string Identifier::to_string() {

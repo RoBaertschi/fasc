@@ -8,12 +8,12 @@
 
 
 namespace fas::ast {
-    ExpressionStatement::ExpressionStatement(Token token) : token(std::move(token)) {
+    ExpressionStatement::ExpressionStatement(token::Token token) : token(std::move(token)) {
     }
 
-    ExpressionStatement::ExpressionStatement(Token token,
+    ExpressionStatement::ExpressionStatement(token::Token token,
                                              std::unique_ptr<Expression> expression) : token(std::move(token)),
-        expression(std::make_optional(std::move(expression))) {
+                                                                                       expression(std::make_optional(std::move(expression))) {
     }
 
     std::string ExpressionStatement::to_string() {

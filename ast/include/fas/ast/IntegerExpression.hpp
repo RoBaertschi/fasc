@@ -5,21 +5,21 @@
 #ifndef INTEGEREXPRESSION_HPP
 #define INTEGEREXPRESSION_HPP
 #include "Expression.hpp"
-#include "Token.hpp"
+#include "fas/token/Token.hpp"
 
 namespace fas::ast {
 
 class IntegerExpression final : public Expression {
 public:
-    IntegerExpression(const std::string &string, Token token);
+    IntegerExpression(const std::string &string, token::Token token);
 
-    IntegerExpression(int64_t value, Token token);
+    IntegerExpression(int64_t value, token::Token token);
 
     std::string to_string() override;
 
     std::string token_literal() override;
 
-    Token token;
+    token::Token token;
     int64_t value;
 };
 

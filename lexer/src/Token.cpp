@@ -3,16 +3,21 @@
 //
 
 #include <map>
-#include "Token.hpp"
+#include "fas/token/Token.hpp"
 
 #include <sstream>
+
+namespace fas::token
+{
+
+
 
 static std::map<std::string, TokenType> keywords{
         {"fn", TokenType::Fn},
         {"extern", TokenType::Extern},
 };
 
-std::string token_type_to_string(TokenType token) {
+std::string token_type_to_string(const TokenType token) {
     switch (token) {
         case TokenType::Illegal:
             return "Illegal";
@@ -59,4 +64,5 @@ TokenType Token::LookupIdent(const std::string &ident) {
         return keywords[ident];
     }
     return TokenType::Identifier;
+}
 }

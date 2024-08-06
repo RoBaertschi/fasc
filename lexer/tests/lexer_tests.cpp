@@ -3,25 +3,27 @@
 //
 
 #include <iostream>
-#include <Lexer.hpp>
+#include <fas/lexer/Lexer.hpp>
 #include <catch2/catch_test_macros.hpp>
 
+using namespace fas;
+
 TEST_CASE("Test Comments", "[lexer]") {
-    auto lexer = Lexer("fn// Test");
+    auto lexer = lexer::Lexer("fn// Test");
     auto nToken = lexer.nextToken();
     INFO(nToken.to_string());
-    REQUIRE(nToken.type == TokenType::Fn);
+    REQUIRE(nToken.type == token::TokenType::Fn);
     nToken = lexer.nextToken();
     INFO(nToken.to_string());
-    REQUIRE(nToken.type == TokenType::Eof);
+    REQUIRE(nToken.type == token::TokenType::Eof);
 }
 
 struct TestCase {
     std::string input;
-    std::vector<Token> expectedTokens;
+    std::vector<token::Token> expectedTokens;
 };
 
-#define _EOF {"", TokenType::Eof}
+#define _EOF {"", token::TokenType::Eof}
 TEST_CASE("Test valid tokens", "[lexer]") {
     // ReSharper disable once CppTooWideScopeInitStatement
     std::vector<TestCase> testCases{
@@ -32,88 +34,88 @@ TEST_CASE("Test valid tokens", "[lexer]") {
         {
             "^",
             {
-                {"^", TokenType::Illegal},
+                {"^", token::TokenType::Illegal},
                 _EOF
             },
         },
         {
             "fn",
             {
-                {"fn", TokenType::Fn},
+                {"fn", token::TokenType::Fn},
                 _EOF
             },
         },
         {
             "extern",
             {
-                {"extern", TokenType::Extern},
+                {"extern", token::TokenType::Extern},
                 _EOF
             },
         },
         {
             "hello",
             {
-                {"hello", TokenType::Identifier},
+                {"hello", token::TokenType::Identifier},
                 _EOF
             },
         },
         {
             "5",
             {
-                {"5", TokenType::Integer},
+                {"5", token::TokenType::Integer},
                 _EOF
             },
         },
         {
             "hello 5",
             {
-                {"hello", TokenType::Identifier},
-                {"5", TokenType::Integer},
+                {"hello", token::TokenType::Identifier},
+                {"5", token::TokenType::Integer},
                 _EOF
             }
         },
         {
             "fn hello(test: int) -> int {}",
             {
-                {"fn", TokenType::Fn},
-                {"hello", TokenType::Identifier},
-                {"(", TokenType::LParent},
-                {"test", TokenType::Identifier},
-                {":", TokenType::Colon},
-                {"int", TokenType::Identifier},
-                {")", TokenType::RParent},
-                {"->", TokenType::Arrow},
-                {"int", TokenType::Identifier},
-                {"{", TokenType::LBraket},
-                {"}", TokenType::RBraket},
+                {"fn", token::TokenType::Fn},
+                {"hello", token::TokenType::Identifier},
+                {"(", token::TokenType::LParent},
+                {"test", token::TokenType::Identifier},
+                {":", token::TokenType::Colon},
+                {"int", token::TokenType::Identifier},
+                {")", token::TokenType::RParent},
+                {"->", token::TokenType::Arrow},
+                {"int", token::TokenType::Identifier},
+                {"{", token::TokenType::LBraket},
+                {"}", token::TokenType::RBraket},
                 _EOF
             },
         },
             {
             "1.2 1. .3 43.. 43..4",
                 {
-                    {"1.2", TokenType::Float},
-                    {"1.", TokenType::Float},
-                    {".3", TokenType::Float},
-                    {"43.", TokenType::Float},
-                    {".", TokenType::Dot},
-                    {"43.", TokenType::Float},
-                    {".4", TokenType::Float},
+                    {"1.2", token::TokenType::Float},
+                    {"1.", token::TokenType::Float},
+                    {".3", token::TokenType::Float},
+                    {"43.", token::TokenType::Float},
+                    {".", token::TokenType::Dot},
+                    {"43.", token::TokenType::Float},
+                    {".4", token::TokenType::Float},
                     _EOF
                 }
             },
     };
     for (auto [input, expectedTokens]: testCases) {
-        auto lexer = Lexer(input);
+        auto lexer = lexer::Lexer(input);
 
         unsigned int i = 0;
-        Token token;
+        token::Token token;
         do {
             token = lexer.nextToken();
             INFO(token.to_string() + expectedTokens[i].to_string());
             REQUIRE(token.type == expectedTokens[i].type);
             REQUIRE(token.literal == expectedTokens[i].literal);
-        } while (i++, token.type != TokenType::Eof);
+        } while (i++, token.type != token::TokenType::Eof);
 
         REQUIRE(i == expectedTokens.size());
     }
