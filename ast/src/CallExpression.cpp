@@ -11,8 +11,8 @@
 
 
 namespace fas::ast {
-    CallExpression::CallExpression(Token token, std::unique_ptr<Expression> function,
-        std::vector<std::unique_ptr<Expression>> params) : token(std::move(token)), function(std::move(function)), params(std::move(params)) {
+    CallExpression::CallExpression(token::Token token, std::unique_ptr<Expression> function,
+                                   std::vector<std::unique_ptr<Expression>> params) : token(std::move(token)), function(std::move(function)), params(std::move(params)) {
     }
 
     std::string CallExpression::to_string() {

@@ -14,13 +14,13 @@ namespace fas::ast {
 
 class CallExpression final : Expression {
 public:
-    CallExpression(Token  token, std::unique_ptr<Expression> function, std::vector<std::unique_ptr<Expression>> params);
+    CallExpression(token::Token  token, std::unique_ptr<Expression> function, std::vector<std::unique_ptr<Expression>> params);
 
     std::string to_string() override;
 
     std::string token_literal() override;
 
-    Token token;
+    token::Token token;
     std::unique_ptr<Expression> function;
     std::vector<std::unique_ptr<Expression>> params;
 };
