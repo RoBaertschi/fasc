@@ -11,8 +11,8 @@ namespace fas::ast {
 class Node {
 public:
     virtual ~Node() = default;
-    virtual std::string to_string();
-    virtual std::string token_literal();
+    virtual std::string to_string() = 0;
+    virtual std::string token_literal() = 0;
 };
 
 } // fas::ast

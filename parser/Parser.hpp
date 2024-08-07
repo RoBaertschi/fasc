@@ -6,9 +6,7 @@
 #define PARSER_HPP
 
 
-
 class Parser {
-
 };
 
 

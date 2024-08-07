@@ -11,8 +11,10 @@
 
 namespace fas::ast {
 
-class Program : public Node {
+class Program final : public Node {
 public:
+    explicit Program(std::vector<std::unique_ptr<Statement>> statements);
+
     std::string to_string() override;
 
     std::string token_literal() override;

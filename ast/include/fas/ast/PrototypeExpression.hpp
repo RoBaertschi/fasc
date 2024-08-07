@@ -15,22 +15,23 @@
 
 
 namespace fas::ast {
+    class PrototypeExpression final : public Expression {
+    public:
+        PrototypeExpression(token::Token token,
+                            std::string name,
+                            std::vector<std::pair<std::unique_ptr<Identifier>, std::unique_ptr<Identifier> > >
+                            parameters,
+                            std::optional<std::unique_ptr<Identifier> > return_type);
 
-class PrototypeExpression final : public Expression {
-public:
-    PrototypeExpression(token::Token token,
-                        std::vector<std::pair<std::unique_ptr<Identifier>, std::unique_ptr<Identifier>>> parameters,
-                        std::optional<std::unique_ptr<Identifier>> return_type);
+        std::string to_string() override;
 
-    std::string to_string() override;
+        std::string token_literal() override;
 
-    std::string token_literal() override;
-
-    token::Token token;
-    std::vector<std::pair<std::unique_ptr<Identifier>, std::unique_ptr<Identifier>>> parameters;
-    std::optional<std::unique_ptr<Identifier>> return_type;
-};
-
+        token::Token token;
+        std::string name;
+        std::vector<std::pair<std::unique_ptr<Identifier>, std::unique_ptr<Identifier> > > parameters;
+        std::optional<std::unique_ptr<Identifier> > return_type;
+    };
 }
 
 #endif //PROTOTYPEEXPRESSION_HPP

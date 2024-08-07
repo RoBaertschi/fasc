@@ -7,6 +7,9 @@
 #include <sstream>
 
 namespace fas::ast {
+    Program::Program(std::vector<std::unique_ptr<Statement>> statements) : statements(std::move(statements)) {
+    }
+
     std::string Program::to_string() {
         std::stringstream stream{};
 

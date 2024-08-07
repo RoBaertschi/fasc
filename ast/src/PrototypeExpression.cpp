@@ -10,13 +10,14 @@
 
 
 namespace fas::ast {
-    PrototypeExpression::PrototypeExpression(token::Token token,
+    PrototypeExpression::PrototypeExpression(token::Token token, std::string name,
                                              std::vector<std::pair<std::unique_ptr<Identifier>, std::unique_ptr<
-                                                                       Identifier> > > parameters,
+                                                 Identifier> > > parameters,
                                              std::optional<std::unique_ptr<Identifier> > return_type): token(std::move(
-                                                                                                           token)),
-                                                                                                       parameters(std::move(parameters)),
-                                                                                                       return_type(std::move(return_type)) {
+            token)),
+        name(std::move(name)),
+        parameters(std::move(parameters)),
+        return_type(std::move(return_type)) {
     }
 
     std::string PrototypeExpression::to_string() {
@@ -29,14 +30,17 @@ namespace fas::ast {
         }
 
         out << "fn ";
-        out << token_literal();
+        out << name;
         out << "(";
-        out << std::accumulate(std::next(params.begin()), params.end(), params[0], [](std::string a, std::string b) {
-            return a + ", " + b;
-        });
-        out << ") ";
+        if (!params.empty()) {
+            out << std::accumulate(std::next(params.begin()), params.end(), params[0],
+                                   [](std::string a, std::string b) {
+                                       return a + ", " + b;
+                                   });
+        }
+        out << ")";
         if (return_type.has_value()) {
-            out << "-> " << return_type.value()->value;
+            out << " -> " << return_type.value()->value;
         }
         return out.str();
     }

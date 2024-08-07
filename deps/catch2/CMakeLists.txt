@@ -6,6 +6,7 @@ FetchContent_Declare(
         GIT_TAG v3.6.0
 )
 
+message(STATUS "Downloading Catch2...")
 FetchContent_MakeAvailable(Catch2)
 
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
