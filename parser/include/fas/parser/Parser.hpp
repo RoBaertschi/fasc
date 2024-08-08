@@ -5,10 +5,11 @@
 #ifndef PARSER_HPP
 #define PARSER_HPP
 
+namespace fas::parser {
 
 class Parser {
 };
 
-
+};
 
 #endif //PARSER_HPP
